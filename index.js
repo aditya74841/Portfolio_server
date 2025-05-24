@@ -13,7 +13,6 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_API_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
-
 // app.post("/ask", async (req, res) => {
 //   const question = req.body.question;
 //   try {
@@ -57,10 +56,10 @@ app.post("/ask", async (req, res) => {
   const context = fs.readFileSync("about_me.txt", "utf-8");
 
   const keywordLinks = {
-    "portfolio": "https://iamadityaranjan.com",
-    "github": "https://github.com/aditya74841",
+    portfolio: "https://iamadityaranjan.com",
+    github: "https://github.com/aditya74841",
     "audit project": "https://audit-demo.netlify.app",
-    "leetcode": "https://leetcode.com/aditya7884/",
+    leetcode: "https://leetcode.com/aditya7884/",
   };
 
   const findLink = (question) => {
@@ -102,6 +101,9 @@ Question: ${question}${extraLink}
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("<h1>Server is Running perfectly</h1>");
+});
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
