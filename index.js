@@ -104,7 +104,7 @@ Question: ${question}${extraLink}
 });
 
 app.get("/health-check", (req, res) => {
-  return res.status(200).json("Server is healthy");
+  return res.status(200).json({message:"Server is healthy"});
 });
 
 app.get("/", (req, res) => {
