@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(cors({ origin: "*" }));
 
-const PORT = 8080;
+// const PORT = 8080;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_API_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
@@ -53,12 +53,13 @@ const GEMINI_API_URL =
 
 app.post("/ask", async (req, res) => {
   const question = req.body.question;
+  console.log("The Question Name is ", question);
   const context = fs.readFileSync("about_me.txt", "utf-8");
 
   const keywordLinks = {
     portfolio: "https://iamadityaranjan.com",
     github: "https://github.com/aditya74841",
-    "audit project": "https://audit-demo.netlify.app",
+    auditproject: "https://audit-demo.netlify.app",
     leetcode: "https://leetcode.com/aditya7884/",
   };
 
@@ -97,13 +98,30 @@ Question: ${question}${extraLink}
 
     res.json({ answer });
   } catch (error) {
+    console.log("The Error res of ask is ", error.message);
     res.status(500).json({ error: "Failed to get answer from Gemini." });
   }
+});
+
+app.get("/health-check", (req, res) => {
+  return res.status(200).json("Server is healthy");
 });
 
 app.get("/", (req, res) => {
   res.send("<h1>Server is Running perfectly</h1>");
 });
-app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${process.env.PORT}`);
 });
+
+// const express = require("express");
+// const app = express();
+
+// app.get("/", (req, res) => {
+//   res.send("Server is alive");
+// });
+
+// const PORT = 8080;
+// app.listen(PORT, () => {
+//   console.log(`🚀 Server running at http://localhost:${PORT}`);
+// });
