@@ -5,6 +5,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { Prompt } from "./model/prompt.model.js";
+import { errorHandler } from "./middlewares/error.middlewares.js";
 
 dotenv.config();
 
@@ -112,10 +113,12 @@ app.get("/", (req, res) => {
   res.send("<h1>Server is Running Perfectly</h1>");
 });
 
+
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
 
+app.use(errorHandler)
 // // server.js (entry point)
 // import express from "express";
 // import fs from "fs";
