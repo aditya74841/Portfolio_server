@@ -1,6 +1,5 @@
 import express from "express";
 
-import { protect } from "../middleware/auth.js";
 import {
   addCommentToUpdate,
   createUpdate,
@@ -15,15 +14,14 @@ import {
 
 const router = express.Router();
 
-router.post("/", protect, createUpdate);
+router.post("/", createUpdate);
 router.get("/", getAllUpdates);
 router.get("/:id", getUpdateById);
-router.put("/:id", protect, updateUpdateById);
-router.delete("/:id", protect, deleteUpdateById);
-router.post("/:id/comment", protect, addCommentToUpdate);
-router.post("/:id/like", likeUpdate);
-router.post("/:id/dislike", dislikeUpdate);
+router.put("/:id", updateUpdateById);
+router.delete("/:id", deleteUpdateById);
 router.post("/:id/comment", addCommentToUpdate);
-router.delete("/:id/comment/:commentIndex", deleteCommentFromUpdate);
+router.get("/:id/like", likeUpdate);
+router.get("/:id/dislike", dislikeUpdate);
+router.delete("/:id/comment/:commentId", deleteCommentFromUpdate);
 
 export default router;

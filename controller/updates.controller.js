@@ -1,27 +1,29 @@
-import { Update } from "../model/update.model.js";
+import { Update } from "../model/updates.model.js";
 import { Category } from "../model/category.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import asyncHandler from "../utils/asyncHandler.js";
+import {asyncHandler} from "../utils/asyncHandler.js";
 
 // Create an Update
 export const createUpdate = asyncHandler(async (req, res) => {
-  const { name, description, createdBy } = req.body;
-
-  if (!name || !createdBy) {
+  console.log("The create Update is ")
+  const { title, description, category } = req.body;
+  console.log(title)
+// console.log(name, description, category)
+  if (!title || !category) {
     throw new ApiError(400, "Name and Category (createdBy) are required");
   }
 
   // Validate that the category exists
-  const categoryExists = await Category.findById(createdBy);
+  const categoryExists = await Category.findById(category);
   if (!categoryExists) {
     throw new ApiError(404, "Category not found");
   }
 
   const newUpdate = await Update.create({
-    name,
+    name:title,
     description,
-    createdBy,
+    createdBy:category,
   });
 
   if (!newUpdate) {
@@ -131,20 +133,28 @@ export const addCommentToUpdate = asyncHandler(async (req, res) => {
 });
 
 export const deleteCommentFromUpdate = asyncHandler(async (req, res) => {
-    const { id, commentIndex } = req.params;
-  
-    const update = await Update.findById(id);
-    if (!update) throw new ApiError(404, "Update not found");
-  
-    if (commentIndex < 0 || commentIndex >= update.comment.length) {
-      throw new ApiError(400, "Invalid comment index");
-    }
-  
-    update.comment.splice(commentIndex, 1);
-    await update.save();
-  
-    return res.status(200).json(new ApiResponse(200, update, "Comment deleted successfully"));
-  });
+  const { id, commentId } = req.params;
+
+  const update = await Update.findById(id);
+  if (!update) throw new ApiError(404, "Update not found");
+
+  // Find index of comment by ID
+  const commentIndex = update.comment.findIndex(
+    (c) => c._id.toString() === commentId
+  );
+
+  if (commentIndex === -1) {
+    throw new ApiError(404, "Comment not found");
+  }
+
+  update.comment.splice(commentIndex, 1); // Remove comment
+  await update.save();
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, update, "Comment deleted successfully"));
+});
+
 
 
   // Add a Like

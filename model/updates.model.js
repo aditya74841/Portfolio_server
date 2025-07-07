@@ -1,18 +1,15 @@
 import mongoose, { Schema } from "mongoose";
 
-const commentSchema = new Schema(
-  {
-    text: {
-      type: String,
-      required: true,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
+const commentSchema = new Schema({
+  text: {
+    type: String,
+    required: true,
   },
-  { _id: false }
-);
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
 const updatesSchema = new Schema(
   {

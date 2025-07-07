@@ -1,12 +1,12 @@
 import { Category } from "../model/category.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import asyncHandler from "../utils/asyncHandler.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 // Create Category
 const createCategory = asyncHandler(async (req, res) => {
   const { name, description } = req.body;
-  
+
   if (!name) {
     throw new ApiError(400, "Name is required");
   }
@@ -33,28 +33,31 @@ const createCategory = asyncHandler(async (req, res) => {
 
 // Get All Categories
 const getCategories = asyncHandler(async (req, res) => {
-  const { page = 1, limit = 10, search } = req.query;
-  
+
+  const { page = 1, limit = 10, search=null } = req.query;
+
   // Build query object
   const query = {};
   if (search) {
     query.$or = [
-      { name: { $regex: search, $options: 'i' } },
-      { description: { $regex: search, $options: 'i' } }
+      { name: { $regex: search, $options: "i" } },
+      { description: { $regex: search, $options: "i" } },
     ];
   }
 
   const options = {
     page: parseInt(page),
     limit: parseInt(limit),
-    sort: { createdAt: -1 }
+    sort: { createdAt: -1 },
   };
 
   const categories = await Category.paginate(query, options);
 
   return res
     .status(200)
-    .json(new ApiResponse(200, categories, "Categories retrieved successfully"));
+    .json(
+      new ApiResponse(200, categories, "Categories retrieved successfully")
+    );
 });
 
 // Get Category by ID
@@ -86,7 +89,10 @@ const updateCategory = asyncHandler(async (req, res) => {
   }
 
   if (!name && !description) {
-    throw new ApiError(400, "At least one field (name or description) is required to update");
+    throw new ApiError(
+      400,
+      "At least one field (name or description) is required to update"
+    );
   }
 
   // Check if category exists
@@ -105,13 +111,13 @@ const updateCategory = asyncHandler(async (req, res) => {
 
   const updatedCategory = await Category.findByIdAndUpdate(
     id,
-    { 
+    {
       ...(name && { name }),
-      ...(description && { description })
+      ...(description && { description }),
     },
-    { 
+    {
       new: true,
-      runValidators: true
+      runValidators: true,
     }
   );
 
@@ -121,7 +127,9 @@ const updateCategory = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, updatedCategory, "Category updated successfully"));
+    .json(
+      new ApiResponse(200, updatedCategory, "Category updated successfully")
+    );
 });
 
 // Delete Category
@@ -154,14 +162,16 @@ const getCategoryCount = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, { count }, "Category count retrieved successfully"));
+    .json(
+      new ApiResponse(200, { count }, "Category count retrieved successfully")
+    );
 });
 
-export { 
+export {
   createCategory,
   getCategories,
   getCategoryById,
   updateCategory,
   deleteCategory,
-  getCategoryCount
+  getCategoryCount,
 };

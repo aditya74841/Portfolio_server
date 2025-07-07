@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { Prompt } from "./model/prompt.model.js";
 import { errorHandler } from "./middlewares/error.middlewares.js";
+import categoryRouter from "./routes/category.routes.js";
+import updateRouter from "./routes/update.routes.js";
 
 dotenv.config();
 
@@ -41,6 +43,9 @@ const getClientIp = (req) => {
   const forwarded = req.headers["x-forwarded-for"];
   return forwarded ? forwarded.split(",")[0] : req.socket.remoteAddress;
 };
+
+app.use("/api/v1/category", categoryRouter);
+app.use("/api/v1/update", updateRouter);
 
 // POST /ask
 app.post("/ask", async (req, res) => {
@@ -113,12 +118,12 @@ app.get("/", (req, res) => {
   res.send("<h1>Server is Running Perfectly</h1>");
 });
 
-
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
 
-app.use(errorHandler)
+app.use(errorHandler);
+
 // // server.js (entry point)
 // import express from "express";
 // import fs from "fs";
