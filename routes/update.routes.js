@@ -15,6 +15,7 @@ import {
 const router = express.Router();
 
 router.post("/", createUpdate);
+// GET /updates?page=1&limit=10 - Fetch updates with pagination (page and limit are optional, default to 1 and 10)
 router.get("/", getAllUpdates);
 router.get("/:id", getUpdateById);
 router.put("/:id", updateUpdateById);

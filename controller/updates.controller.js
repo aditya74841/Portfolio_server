@@ -35,16 +35,26 @@ export const createUpdate = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, newUpdate, "Update created successfully"));
 });
 
-// Get All Updates
+// Get All Updates with Pagination
 export const getAllUpdates = asyncHandler(async (req, res) => {
+  // Get page and limit from query params, default to page=1, limit=10
+  let { page = 1, limit = 10 } = req.query;
+  page = parseInt(page);
+  limit = parseInt(limit);
+  const skip = (page - 1) * limit;
+
   const updates = await Update.find()
     .populate("createdBy", "name") // Populate category name
-    // .populate("comment.commentedBy", "name email")
-    .sort({ createdAt: -1 });
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
+
+  // Optionally, send total count for frontend to know if more pages exist
+  const total = await Update.countDocuments();
 
   return res
     .status(200)
-    .json(new ApiResponse(200, updates, "Updates fetched successfully"));
+    .json(new ApiResponse(200, { updates, total, page, limit }, "Updates fetched successfully"));
 });
 
 // Get Update By ID
