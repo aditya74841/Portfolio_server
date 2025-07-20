@@ -35,10 +35,10 @@ mongoose
 const keywordLinks = {
   portfolio: "https://iamadityaranjan.com",
   github: "https://github.com/aditya74841",
-  auditproject: "https://audit-demo.netlify.app",
+  auditproject: "https://audit.iamadityaranjan.com",
   leetcode: "https://leetcode.com/aditya7884/",
   onlinecv: "https://iamadityaranjan.com/cv",
-  linkedin: "https://www.linkedin.com/in/aditya-ranjan-dev",
+  linkedin: "https://www.linkedin.com/in/iamadityaranjan",
   email: "mailto:adityaranjan.dev@gmail.com",
   contact: "https://iamadityaranjan.com/#contact",
   projects: "https://iamadityaranjan.com/#projects",
@@ -117,11 +117,10 @@ Important Guidelines:
 Available Links (use when relevant):
 - Portfolio: https://iamadityaranjan.com
 - GitHub: https://github.com/aditya74841
-- LinkedIn: https://www.linkedin.com/in/aditya-ranjan-dev
+- LinkedIn: https://www.linkedin.com/in/iamadityaranjan
 - LeetCode: https://leetcode.com/aditya7884/
 - Online CV: https://iamadityaranjan.com/cv
-- Projects Demo: https://audit-demo.netlify.app
-
+- Projects Demo: https://audit.iamadityaranjan.com
 Question: ${question}
 `;
 
