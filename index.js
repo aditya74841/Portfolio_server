@@ -62,13 +62,13 @@ const enhanceResponseWithLinks = (answer, question) => {
   // Contact-related enhancements
   if (lower.includes('contact') || lower.includes('reach') || lower.includes('connect')) {
     if (!enhancedAnswer.includes('iamadityaranjan.com')) {
-      enhancedAnswer += `\n\nYou can connect with me through:\n- [Portfolio Website](https://iamadityaranjan.com)\n- [LinkedIn](https://www.linkedin.com/in/aditya-ranjan-dev)\n- [GitHub](https://github.com/aditya74841)`;
+      enhancedAnswer += `\n\nYou can connect with me through:\n- [Portfolio Website](https://iamadityaranjan.com)\n- [LinkedIn](https://www.linkedin.com/in/iamadityaranjan)\n- [GitHub](https://github.com/aditya74841)`;
     }
   }
   
   // Project-related enhancements
   if (lower.includes('project') && !enhancedAnswer.includes('github.com')) {
-    enhancedAnswer += `\n\nCheck out my projects on [GitHub](https://github.com/aditya74841) or visit my [Portfolio](https://iamadityaranjan.com/#projects) for detailed case studies.`;
+    enhancedAnswer += `\n\nCheck out my projects on [GitHub](https://github.com/aditya74841) or visit my [Portfolio](https://iamadityaranjan.com/projects) for detailed case studies.`;
   }
   
   // Skills-related enhancements

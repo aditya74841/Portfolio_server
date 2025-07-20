@@ -161,7 +161,7 @@ I'm passionate about transforming ideas into powerful digital solutions that mak
 
 **Connect with me:**
 - **Portfolio & Case Studies**: https://iamadityaranjan.com
-- **Professional Network**: https://www.linkedin.com/in/aditya-ranjan-dev  
+- **Professional Network**: https://www.linkedin.com/in/iamadityaranjan  
 - **Code Repository**: https://github.com/aditya74841
 - **Problem-Solving Skills**: https://leetcode.com/aditya7884/
 - **Professional CV**: https://iamadityaranjan.com/cv
