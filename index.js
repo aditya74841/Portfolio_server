@@ -9,6 +9,7 @@ import { Prompt } from "./model/prompt.model.js";
 import { errorHandler } from "./middlewares/error.middlewares.js";
 import categoryRouter from "./routes/category.routes.js";
 import updateRouter from "./routes/update.routes.js";
+import aiRouter from "./routes/prompt.routes.js";
 
 dotenv.config();
 
@@ -98,6 +99,7 @@ const getClientIp = (req) => {
 // Apply specific rate limiting to route groups
 app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/update", updateRouter);
+app.use("/api/v1/ai", aiRouter);
 
 // Enhanced link detection function
 const enhanceResponseWithLinks = (answer, question) => {
