@@ -10,7 +10,7 @@ import { errorHandler } from "./middlewares/error.middlewares.js";
 import categoryRouter from "./routes/category.routes.js";
 import updateRouter from "./routes/update.routes.js";
 import aiRouter from "./routes/prompt.routes.js";
-
+import contactRouter from "./routes/contact.routes.js";
 dotenv.config();
 
 const app = express();
@@ -39,7 +39,7 @@ const generalLimiter = rateLimit({
   max: 100, // Limit each IP to 100 requests per windowMs
   message: {
     error: "Too many requests from this IP, please try again later.",
-    retryAfter: "15 minutes"
+    retryAfter: "15 minutes",
   },
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
@@ -50,8 +50,9 @@ const askLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 10 minutes
   max: 20, // Limit each IP to 20 AI questions per 10 minutes
   message: {
-    error: "Too many AI questions from this IP. Please wait before asking more questions.",
-    retryAfter: "10 minutes"
+    error:
+      "Too many AI questions from this IP. Please wait before asking more questions.",
+    retryAfter: "10 minutes",
   },
   standardHeaders: true,
   legacyHeaders: false,
@@ -60,7 +61,7 @@ const askLimiter = rateLimit({
     return ipKeyGenerator(req.ip);
   },
   skipSuccessfulRequests: false,
-  skipFailedRequests: true
+  skipFailedRequests: true,
 });
 
 // Very strict rate limiting for potential abuse endpoints
@@ -69,8 +70,8 @@ const strictLimiter = rateLimit({
   max: 5, // Only 5 requests per hour for very sensitive endpoints
   message: {
     error: "Rate limit exceeded. This endpoint has strict limits.",
-    retryAfter: "1 hour"
-  }
+    retryAfter: "1 hour",
+  },
 });
 
 // Apply general rate limiting to all routes
@@ -87,7 +88,7 @@ const keywordLinks = {
   email: "mailto:adityaranjan.dev@gmail.com",
   contact: "https://iamadityaranjan.com/#contact",
   projects: "https://iamadityaranjan.com/#projects",
-  resume: "https://iamadityaranjan.com/cv"
+  resume: "https://iamadityaranjan.com/cv",
 };
 
 // IP helper
@@ -100,38 +101,51 @@ const getClientIp = (req) => {
 app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/update", updateRouter);
 app.use("/api/v1/ai", aiRouter);
+app.use("/api/v1/contact", contactRouter);
 
 // Enhanced link detection function
 const enhanceResponseWithLinks = (answer, question) => {
   const lower = question.toLowerCase();
   let enhancedAnswer = answer;
-  
+
   // Contact-related enhancements
-  if (lower.includes('contact') || lower.includes('reach') || lower.includes('connect')) {
-    if (!enhancedAnswer.includes('iamadityaranjan.com')) {
+  if (
+    lower.includes("contact") ||
+    lower.includes("reach") ||
+    lower.includes("connect")
+  ) {
+    if (!enhancedAnswer.includes("iamadityaranjan.com")) {
       enhancedAnswer += `\n\nYou can connect with me through:\n- [Portfolio Website](https://iamadityaranjan.com)\n- [LinkedIn](https://www.linkedin.com/in/iamadityaranjan)\n- [GitHub](https://github.com/aditya74841)`;
     }
   }
-  
+
   // Project-related enhancements
-  if (lower.includes('project') && !enhancedAnswer.includes('github.com')) {
+  if (lower.includes("project") && !enhancedAnswer.includes("github.com")) {
     enhancedAnswer += `\n\nCheck out my projects on [GitHub](https://github.com/aditya74841) or visit my [Portfolio](https://iamadityaranjan.com/projects) for detailed case studies.`;
   }
-  
+
   // Skills-related enhancements
-  if (lower.includes('skill') || lower.includes('technology') || lower.includes('stack')) {
-    if (!enhancedAnswer.includes('leetcode.com')) {
+  if (
+    lower.includes("skill") ||
+    lower.includes("technology") ||
+    lower.includes("stack")
+  ) {
+    if (!enhancedAnswer.includes("leetcode.com")) {
       enhancedAnswer += `\n\nYou can see my problem-solving skills on [LeetCode](https://leetcode.com/aditya7884/) and explore my technical projects on [GitHub](https://github.com/aditya74841).`;
     }
   }
-  
+
   // Resume/CV related
-  if (lower.includes('resume') || lower.includes('cv') || lower.includes('experience')) {
-    if (!enhancedAnswer.includes('/cv')) {
+  if (
+    lower.includes("resume") ||
+    lower.includes("cv") ||
+    lower.includes("experience")
+  ) {
+    if (!enhancedAnswer.includes("/cv")) {
       enhancedAnswer += `\n\nYou can view my detailed resume at [Online CV](https://iamadityaranjan.com/cv).`;
     }
   }
-  
+
   return enhancedAnswer;
 };
 
@@ -199,8 +213,9 @@ Question: ${question}
     res.status(200).json({ answer, saved: shouldSave });
   } catch (error) {
     console.error("❌ Error in /ask:", error.message);
-    res.status(500).json({ 
-      error: "I'm having trouble processing your request right now. Please try again in a moment." 
+    res.status(500).json({
+      error:
+        "I'm having trouble processing your request right now. Please try again in a moment.",
     });
   }
 });
@@ -211,7 +226,9 @@ app.get("/health-check", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("<h1>Aditya's AI Assistant Server</h1><p>Server is running perfectly</p>");
+  res.send(
+    "<h1>Aditya's AI Assistant Server</h1><p>Server is running perfectly</p>"
+  );
 });
 
 app.listen(PORT, () => {
@@ -219,8 +236,6 @@ app.listen(PORT, () => {
 });
 
 app.use(errorHandler);
-
-
 
 // import express from "express";
 // import fs from "fs";
@@ -282,33 +297,33 @@ app.use(errorHandler);
 // const enhanceResponseWithLinks = (answer, question) => {
 //   const lower = question.toLowerCase();
 //   let enhancedAnswer = answer;
-  
+
 //   // Contact-related enhancements
 //   if (lower.includes('contact') || lower.includes('reach') || lower.includes('connect')) {
 //     if (!enhancedAnswer.includes('iamadityaranjan.com')) {
 //       enhancedAnswer += `\n\nYou can connect with me through:\n- [Portfolio Website](https://iamadityaranjan.com)\n- [LinkedIn](https://www.linkedin.com/in/iamadityaranjan)\n- [GitHub](https://github.com/aditya74841)`;
 //     }
 //   }
-  
+
 //   // Project-related enhancements
 //   if (lower.includes('project') && !enhancedAnswer.includes('github.com')) {
 //     enhancedAnswer += `\n\nCheck out my projects on [GitHub](https://github.com/aditya74841) or visit my [Portfolio](https://iamadityaranjan.com/projects) for detailed case studies.`;
 //   }
-  
+
 //   // Skills-related enhancements
 //   if (lower.includes('skill') || lower.includes('technology') || lower.includes('stack')) {
 //     if (!enhancedAnswer.includes('leetcode.com')) {
 //       enhancedAnswer += `\n\nYou can see my problem-solving skills on [LeetCode](https://leetcode.com/aditya7884/) and explore my technical projects on [GitHub](https://github.com/aditya74841).`;
 //     }
 //   }
-  
+
 //   // Resume/CV related
 //   if (lower.includes('resume') || lower.includes('cv') || lower.includes('experience')) {
 //     if (!enhancedAnswer.includes('/cv')) {
 //       enhancedAnswer += `\n\nYou can view my detailed resume at [Online CV](https://iamadityaranjan.com/cv).`;
 //     }
 //   }
-  
+
 //   return enhancedAnswer;
 // };
 
@@ -376,8 +391,8 @@ app.use(errorHandler);
 //     res.status(200).json({ answer, saved: shouldSave });
 //   } catch (error) {
 //     console.error("❌ Error in /ask:", error.message);
-//     res.status(500).json({ 
-//       error: "I'm having trouble processing your request right now. Please try again in a moment." 
+//     res.status(500).json({
+//       error: "I'm having trouble processing your request right now. Please try again in a moment."
 //     });
 //   }
 // });
@@ -396,4 +411,3 @@ app.use(errorHandler);
 // });
 
 // app.use(errorHandler);
-
