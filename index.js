@@ -222,7 +222,7 @@ Question: ${question}
 
 // Health check - No additional rate limiting needed
 app.get("/health-check", (req, res) => {
-  res.status(200).json({ message: "Server is healthy" });
+  return res.status(200).json({ success: true, message: "Server is healthy" });
 });
 
 app.get("/", (req, res) => {
