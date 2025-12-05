@@ -5,6 +5,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 // Create Category
 const createCategory = asyncHandler(async (req, res) => {
+  console.log("The openai api key is", process.env.OPENAI_API_KEY);
   const { name, description } = req.body;
 
   if (!name) {
@@ -33,8 +34,7 @@ const createCategory = asyncHandler(async (req, res) => {
 
 // Get All Categories
 const getCategories = asyncHandler(async (req, res) => {
-
-  const { page = 1, limit = 10, search=null } = req.query;
+  const { page = 1, limit = 10, search = null } = req.query;
 
   // Build query object
   const query = {};

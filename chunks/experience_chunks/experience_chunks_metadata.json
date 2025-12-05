@@ -1,0 +1,26 @@
+[
+  {
+    "id": "experience_1",
+    "text": "experience_chunk_1_acme.txt",
+    "chunk_index": 1,
+    "source": "resume_experience.txt",
+    "tags": ["experience", "backend", "lead"],
+    "title": "Senior Software Engineer — Acme Tech"
+  },
+  {
+    "id": "experience_2",
+    "text": "experience_chunk_2_zenith.txt",
+    "chunk_index": 2,
+    "source": "resume_experience.txt",
+    "tags": ["experience", "frontend", "react"],
+    "title": "Frontend Engineer — Zenith Labs"
+  },
+  {
+    "id": "experience_3",
+    "text": "experience_chunk_3_internship.txt",
+    "chunk_index": 3,
+    "source": "resume_experience.txt",
+    "tags": ["experience", "internship"],
+    "title": "Software Engineering Intern — BrightApps"
+  }
+]

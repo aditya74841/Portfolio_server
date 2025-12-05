@@ -1,0 +1,26 @@
+[
+  {
+    "id": "project_1",
+    "text": "project_chunk_1_audit.txt",
+    "chunk_index": 1,
+    "source": "projects_overview.txt",
+    "tags": ["projects", "fullstack", "audit"],
+    "title": "Audit Management System"
+  },
+  {
+    "id": "project_2",
+    "text": "project_chunk_2_metaforge.txt",
+    "chunk_index": 2,
+    "source": "projects_overview.txt",
+    "tags": ["projects", "frontend", "seo"],
+    "title": "MetaForge Pro"
+  },
+  {
+    "id": "project_3",
+    "text": "project_chunk_3_pos.txt",
+    "chunk_index": 3,
+    "source": "projects_overview.txt",
+    "tags": ["projects", "fullstack", "pos"],
+    "title": "POS System - BlackWater Coffee"
+  }
+]

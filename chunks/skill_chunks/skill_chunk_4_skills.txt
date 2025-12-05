@@ -1,0 +1,26 @@
+Tell Me About My Skills
+
+Technical expertise spans the full development stack, enabling end-to-end solutions with efficiency and precision.
+
+Frontend Development:
+- JavaScript (ES6+), React.js, Next.js, TypeScript
+- State Management: Redux
+- Styling: TailwindCSS, Responsive Design
+- Expertise in creating intuitive user interfaces with 25% improved data visualization efficiency
+
+Backend Development:
+- Node.js, Express.js
+- RESTful API design and implementation
+- JWT Authentication & Authorization
+- Real-time communication with Socket.io
+
+Database & Tools:
+- MongoDB for scalable data management
+- Development Tools: Git/GitHub, Postman, Vite, Cloudinary
+- AI-Powered Development: ChatGPT, Claude, Perplexity, Quodogen, Cursor, Prompt Engineering
+
+Methodologies & Practices:
+- Agile Development workflows
+- Test-Driven Development (TDD)
+- Performance optimization (achieved 30% faster load times)
+- Code quality and maintainability focus

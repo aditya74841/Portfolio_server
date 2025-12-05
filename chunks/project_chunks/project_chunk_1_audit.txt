@@ -1,0 +1,20 @@
+Project: Audit Management System
+
+A comprehensive end-to-end solution enabling companies to efficiently audit multiple store locations. The system streamlines audit processes with standardized question sets and real-time data synchronization.
+
+Key Features:
+- Standardized question sets with structured response collection
+- Multimedia support (photos, videos, files, text) for comprehensive audit submissions
+- Real-time data synchronization across locations
+
+Technical Implementation:
+- Backend: Node.js, Express.js, MongoDB
+- Authentication: JWT
+- Real-time: Socket.io
+- Frontend: Next.js, ShadCN UI, TailwindCSS
+- Storage: Cloudinary for media files
+
+Business Impact:
+- Streamlined audit processes for multi-location businesses
+- Achieved 100% data accuracy in audit submissions
+- Improved audit completion time and compliance tracking

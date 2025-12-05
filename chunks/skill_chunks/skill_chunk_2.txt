@@ -1,0 +1,8 @@
+Skill chunk 2 — Databases, testing & tooling
+
+- Databases: MongoDB (Mongoose), PostgreSQL
+- Testing: Jest, Supertest
+- Tools: Git, Docker (basic), CI/CD fundamentals
+- Observability: logging and simple monitoring approaches
+
+This chunk covers data, QA, and developer tools that support reliable delivery.

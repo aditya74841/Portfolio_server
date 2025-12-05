@@ -1,0 +1,8 @@
+Software Engineering Intern — BrightApps (2018)
+
+Contributed to a small engineering team building a prototype payments dashboard. Implemented features in Express and vanilla JS, wrote automated tests, and helped debug production issues. This internship provided practical exposure to full-stack development and collaborative workflows.
+
+Key contributions:
+- Built dashboard widgets for transaction visualization
+- Added end-to-end tests for critical flows
+- Participated in agile ceremonies and code reviews
