@@ -1,0 +1,8 @@
+Skill chunk 1 — Core languages & frameworks
+
+- JavaScript (ES6+), TypeScript
+- Node.js, Express.js
+- React (functional components, hooks)
+- RESTful APIs and basic API design patterns
+
+This chunk focuses on the primary development languages and frameworks I use for building applications.

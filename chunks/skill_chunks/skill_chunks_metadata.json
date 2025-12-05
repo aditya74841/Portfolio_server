@@ -1,0 +1,58 @@
+[
+  {
+    "id": "skill_1",
+    "text": "skill_chunk_1.txt",
+    "chunk_index": 1,
+    "source": "skills_overview.txt",
+    "tags": ["skills", "technical"],
+    "title": "Core languages & frameworks"
+  },
+  {
+    "id": "skill_2",
+    "text": "skill_chunk_2.txt",
+    "chunk_index": 2,
+    "source": "skills_overview.txt",
+    "tags": ["skills", "tools_databases"],
+    "title": "Databases, testing & tooling"
+  },
+  {
+    "id": "skill_3",
+    "text": "skill_chunk_3_summary.txt",
+    "chunk_index": 3,
+    "source": "about_me.txt",
+    "tags": ["summary", "bio"],
+    "title": "Summary"
+  },
+  {
+    "id": "skill_4",
+    "text": "skill_chunk_4_skills.txt",
+    "chunk_index": 4,
+    "source": "about_me.txt",
+    "tags": ["skills", "technical"],
+    "title": "Skills"
+  },
+  {
+    "id": "skill_5",
+    "text": "skill_chunk_5_experience.txt",
+    "chunk_index": 5,
+    "source": "about_me.txt",
+    "tags": ["experience", "work"],
+    "title": "Experience"
+  },
+  {
+    "id": "skill_6",
+    "text": "skill_chunk_6_education.txt",
+    "chunk_index": 6,
+    "source": "about_me.txt",
+    "tags": ["education", "learning"],
+    "title": "Education & Background"
+  },
+  {
+    "id": "skill_7",
+    "text": "skill_chunk_7_contact.txt",
+    "chunk_index": 7,
+    "source": "about_me.txt",
+    "tags": ["contact", "profile"],
+    "title": "Contact"
+  }
+]

@@ -1,0 +1,13 @@
+What's My Experience?
+
+Full Stack Developer | CodenCreative | Feb 2024 - Present
+- Platform Optimization: Optimized e-commerce platform serving 10,000+ users, achieving 30% faster load times and 20% higher user engagement through strategic code optimization and intelligent caching strategies.
+- Leadership & Innovation: Led frontend development for research applications, improving data visualization efficiency by 25%.
+- Leveraged AI tools (ChatGPT, Claude, Cursor) for coding assistance, debugging, and automating repetitive tasks, significantly improving productivity and code quality.
+
+Full Stack Developer | BlackWater Coffee Pvt Ltd | Dec 2022 - Jan 2024
+- System Design & Deployment: Designed and deployed a POS system handling 500+ daily transactions, reducing average checkout time by 40%.
+- Process Improvement: Developed an inventory management module, improving accuracy from 75% to 95%.
+- Integrated Kitchen Display System, accelerating order fulfillment by 25%.
+
+Total Experience: 2.5+ years of hands-on full-stack development with proven results in performance optimization, system architecture, and user experience enhancement.

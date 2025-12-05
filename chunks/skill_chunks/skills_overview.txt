@@ -1,0 +1,5 @@
+Skills overview
+
+I work across frontend and backend development with a focus on JavaScript, Node.js, and building reliable APIs. I also use databases (MongoDB, PostgreSQL), testing tools, and common DevOps practices to ship maintainable software.
+
+This overview is split into smaller chunks for embeddings, search, or display: two technical chunks (core languages/frameworks and databases/tools).

@@ -1,0 +1,8 @@
+Frontend Engineer — Zenith Labs (2019 — 2021)
+
+Worked on building responsive, accessible user interfaces using React and Next.js. Implemented performance improvements (code-splitting, image optimization) and improved SEO for customer-facing pages. Partnered with designers to translate mocks into interactive components and improved adoption of design system primitives across the app.
+
+Key contributions:
+- Implemented component library and documentation
+- Improved page speed (Lighthouse) scores through lazy loading
+- Collaborated on A/B tests to validate UX changes

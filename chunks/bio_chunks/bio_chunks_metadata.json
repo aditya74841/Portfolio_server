@@ -1,0 +1,19 @@
+[
+    {
+      "id": "bio_1",
+      "text": "bio_chunk_1.txt",
+      "chunk_index": 1,
+      "source": "about_me_bio.txt",
+      "tags": ["bio", "introduction"],
+      "title": "Introduction"
+    },
+    {
+      "id": "bio_2",
+      "text": "bio_chunk_2.txt",
+      "chunk_index": 2,
+      "source": "about_me_bio.txt",
+      "tags": ["bio", "skills_goals"],
+      "title": "Skills & Goals"
+    }
+  ]
+  

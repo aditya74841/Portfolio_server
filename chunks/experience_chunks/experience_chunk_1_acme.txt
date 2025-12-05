@@ -1,0 +1,8 @@
+Senior Software Engineer — Acme Tech (2021 — Present)
+
+At Acme Tech I led backend platform development for the audit and reporting service. I built scalable REST APIs using Node.js and Express, integrated MongoDB for data storage, and implemented robust unit and integration tests. I collaborated with frontend engineers to define contract-driven APIs and reduced average report generation time by 40% through performance tuning and query optimization.
+
+Key contributions:
+- Designed and implemented microservice for audit processing
+- Optimized MongoDB queries and added indexes for reporting workloads
+- Wrote CI pipelines and test suites to improve delivery confidence

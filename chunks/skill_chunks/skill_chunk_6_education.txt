@@ -1,0 +1,13 @@
+Education & Background
+
+Bachelor of Technology in Computer Science
+Amritsar College of Engineering & Technology | 2019-2023 | CGPA: 7.4
+
+Certifications & Learning:
+- Currently mastering: DSA, System Design, TypeScript
+- LeetCode: 150+ problems solved
+- Active contributor to open-source projects
+
+Professional highlights:
+- Regular participant in tech communities and hackathons
+- Mentored junior developers and documented APIs and architectures for smooth onboarding
