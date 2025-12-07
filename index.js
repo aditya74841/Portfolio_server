@@ -1,9 +1,11 @@
+import "dotenv/config";
 
 import express from "express";
 import fs, { existsSync, readFileSync, writeFileSync } from "fs";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+// dotenv.config();
 import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import crypto from "crypto";
 
@@ -15,8 +17,12 @@ import categoryRouter from "./routes/category.routes.js";
 import updateRouter from "./routes/update.routes.js";
 import contactRouter from "./routes/contact.routes.js";
 import streakRouter from "./routes/streak.routes.js";
+import aiRouter from "./routes/ai.routes.js";
 
-dotenv.config();
+// --------------------------------------------------------------------
+// 🚀 App Initialization
+// --------------------------------------------------------------------
+
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: "*" }));
@@ -59,6 +65,7 @@ app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/update", updateRouter);
 app.use("/api/v1/contact", contactRouter);
 app.use("/api/v1/streak", streakRouter);
+app.use("/api/v1/ai", aiRouter);
 
 app.get("/", (req, res) => res.send("<h1>Aditya’s AI Assistant (Gemini + LangChain)</h1>"));
 app.get("/health-check", (req, res) => res.status(200).json({ success: true }));
