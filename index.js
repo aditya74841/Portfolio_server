@@ -18,6 +18,9 @@ import updateRouter from "./routes/update.routes.js";
 import contactRouter from "./routes/contact.routes.js";
 import streakRouter from "./routes/streak.routes.js";
 import aiRouter from "./routes/ai.routes.js";
+import projectRouter from "./routes/project.routes.js";
+import authRouter from "./routes/auth.routes.js";
+import ideaRouter from "./routes/idea.routes.js";
 
 // --------------------------------------------------------------------
 // 🚀 App Initialization
@@ -25,7 +28,8 @@ import aiRouter from "./routes/ai.routes.js";
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: "*" }));
+// We assume we might need cookies, but for now we won't strictly require cookie-parser to run
+app.use(cors({ origin: "*", credentials: true })); // Enable credentials for auth
 
 // ⚙️ Config
 const PORT = process.env.PORT || 8080;
@@ -66,6 +70,9 @@ app.use("/api/v1/update", updateRouter);
 app.use("/api/v1/contact", contactRouter);
 app.use("/api/v1/streak", streakRouter);
 app.use("/api/v1/ai", aiRouter);
+app.use("/api/v1/project", projectRouter);
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/idea", ideaRouter);
 
 app.get("/", (req, res) => res.send("<h1>Aditya’s AI Assistant (Gemini + LangChain)</h1>"));
 app.get("/health-check", (req, res) => res.status(200).json({ success: true }));

@@ -27,7 +27,7 @@ You are the **Digital Twin of Aditya Ranjan**, a professional Full-Stack Develop
 const ABOUT_ME = `
 User Profile:
 Name: Aditya Ranjan, Full Stack Software Developer.
-Experience: Nearly 3 years (2.5+ years) of professional experience.
+Experience: Nearly 3 years  of professional experience.
 Seeking: Full Stack Developer role (7+ LPA), open to Remote/Hybrid/On-site across India.
 Availability: Immediately available (0-15 days notice).
 
