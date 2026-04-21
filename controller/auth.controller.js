@@ -144,3 +144,57 @@ export const devAdminLogin = asyncHandler(async (req, res) => {
         .status(200)
         .json(new ApiResponse(200, { user: userResponse, token: jwtToken }, "Login successful"));
 });
+
+export const pinLogin = asyncHandler(async (req, res) => {
+    const { pin } = req.body;
+
+    if (!pin) {
+        throw new ApiError(400, "PIN is required");
+    }
+
+    const dashboardPin = process.env.DASHBOARD_PIN || "1234";
+
+    if (pin !== dashboardPin) {
+        throw new ApiError(401, "Invalid PIN");
+    }
+
+    // For simplicity, we'll log in as the admin user defined in .env
+    const adminEmail = process.env.ADMIN_EMAIL;
+    if (!adminEmail) {
+        throw new ApiError(500, "ADMIN_EMAIL must be set for PIN login");
+    }
+
+    let user = await User.findOne({ email: adminEmail });
+    if (!user) {
+        // Create the admin user if it doesn't exist
+        user = await User.create({
+            name: "Admin",
+            email: adminEmail,
+            googleId: `pin:${adminEmail}`, // Placeholder googleId
+            avatar: "",
+            role: "admin",
+        });
+    }
+
+    const jwtToken = generateToken(user._id);
+
+    // Set cookie
+    res.cookie("token", jwtToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
+
+    const userResponse = {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar,
+        role: user.role,
+    };
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, { user: userResponse, token: jwtToken }, "PIN Login successful"));
+});

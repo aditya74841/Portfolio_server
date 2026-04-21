@@ -4,6 +4,7 @@ import {
     devAdminLogin,
     logout,
     getCurrentUser,
+    pinLogin,
 } from "../controller/auth.controller.js";
 import { protect } from "../middlewares/auth.middleware.js";
 
@@ -11,6 +12,7 @@ const router = express.Router();
 
 router.post("/google", googleLogin);
 router.post("/dev", devAdminLogin);
+router.post("/pin-login", pinLogin);
 router.post("/logout", protect, logout);
 router.get("/me", protect, getCurrentUser);
 

@@ -4,6 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 export const createIdea = asyncHandler(async (req, res) => {
+  console.log("createIdea hit");
   const { title, description, status } = req.body;
 
   if (!title || !description) {
@@ -161,5 +162,79 @@ export const deleteIdeaUpdate = asyncHandler(async (req, res) => {
   await idea.save();
 
   return res.status(200).json(new ApiResponse(200, idea, "Update deleted successfully"));
+});
+
+export const deleteIdea = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const owner = req.user?._id;
+
+  if (!id) {
+    throw new ApiError(400, "Idea ID is required");
+  }
+  if (!owner) {
+    throw new ApiError(401, "Not authorized");
+  }
+
+  const idea = await Idea.findOneAndDelete({ _id: id, owner });
+  if (!idea) {
+    throw new ApiError(404, "Idea not found");
+  }
+
+  return res.status(200).json(new ApiResponse(200, {}, "Idea deleted successfully"));
+});
+
+export const changeIdeaStatus = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  const owner = req.user?._id;
+
+  if (!id || !status) {
+    throw new ApiError(400, "Idea ID and status are required");
+  }
+  if (!owner) {
+    throw new ApiError(401, "Not authorized");
+  }
+
+  const idea = await Idea.findOneAndUpdate(
+    { _id: id, owner },
+    { status },
+    { new: true, runValidators: true }
+  );
+
+  if (!idea) {
+    throw new ApiError(404, "Idea not found");
+  }
+
+  return res.status(200).json(new ApiResponse(200, idea, "Status updated successfully"));
+});
+
+export const updateIdeaUpdate = asyncHandler(async (req, res) => {
+  const { id, updateId } = req.params;
+  const { description, links } = req.body;
+  const owner = req.user?._id;
+
+  if (!id || !updateId) {
+    throw new ApiError(400, "Idea ID and update ID are required");
+  }
+  if (!owner) {
+    throw new ApiError(401, "Not authorized");
+  }
+
+  const idea = await Idea.findOne({ _id: id, owner });
+  if (!idea) {
+    throw new ApiError(404, "Idea not found");
+  }
+
+  const update = idea.updates.id(updateId);
+  if (!update) {
+    throw new ApiError(404, "Update not found");
+  }
+
+  if (description) update.description = description;
+  if (links) update.links = Array.isArray(links) ? links : update.links;
+
+  await idea.save();
+
+  return res.status(200).json(new ApiResponse(200, idea, "Update modified successfully"));
 });
 
