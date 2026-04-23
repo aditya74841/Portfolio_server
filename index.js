@@ -21,6 +21,7 @@ import aiRouter from "./routes/ai.routes.js";
 import projectRouter from "./routes/project.routes.js";
 import authRouter from "./routes/auth.routes.js";
 import ideaRouter from "./routes/idea.routes.js";
+import questionTemplateRouter from "./routes/questionTemplate.routes.js";
 
 // --------------------------------------------------------------------
 // 🚀 App Initialization
@@ -73,6 +74,7 @@ app.use("/api/v1/ai", aiRouter);
 app.use("/api/v1/project", projectRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/idea", ideaRouter);
+app.use("/api/v1/template", questionTemplateRouter);
 
 app.get("/", (req, res) => res.send("<h1>Aditya’s AI Assistant (Gemini + LangChain)</h1>"));
 app.get("/health-check", (req, res) => res.status(200).json({ success: true }));

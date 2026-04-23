@@ -4,7 +4,6 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 export const createIdea = asyncHandler(async (req, res) => {
-  console.log("createIdea hit");
   const { title, description, status } = req.body;
 
   if (!title || !description) {
