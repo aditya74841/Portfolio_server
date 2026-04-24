@@ -31,7 +31,10 @@ const app = express();
 app.use(express.json());
 // We assume we might need cookies, but for now we won't strictly require cookie-parser to run
 app.use(cors({ 
-  origin: ["http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:5173", "http://localhost:5174"], 
+  origin: (origin, callback) => {
+    // Allow all origins for now to debug production issues
+    callback(null, true);
+  },
   credentials: true 
 }));
 
