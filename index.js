@@ -30,7 +30,10 @@ import questionTemplateRouter from "./routes/questionTemplate.routes.js";
 const app = express();
 app.use(express.json());
 // We assume we might need cookies, but for now we won't strictly require cookie-parser to run
-app.use(cors({ origin: "*", credentials: true })); // Enable credentials for auth
+app.use(cors({ 
+  origin: ["http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:5173", "http://localhost:5174"], 
+  credentials: true 
+}));
 
 // ⚙️ Config
 const PORT = process.env.PORT || 8080;

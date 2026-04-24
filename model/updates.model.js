@@ -34,9 +34,20 @@ const updatesSchema = new Schema(
       default: "good",
     },
 
+    why: {
+      type: String,
+      default: "",
+    },
+
     isPublic: {
       type: Boolean,
       default: false,
+    },
+
+    screenTime: {
+      hours: { type: Number, default: 0 },
+      minutes: { type: Number, default: 0 },
+      note: { type: String, default: "" },
     },
   },
   { timestamps: true },

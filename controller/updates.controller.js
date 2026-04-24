@@ -185,13 +185,13 @@ export const deleteQuestion = asyncHandler(async (req, res) => {
  */
 export const updateMood = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { mood } = req.body;
+  const { mood, why } = req.body;
 
   if (!mood) throw new ApiError(400, "Mood is required");
 
   const update = await Update.findByIdAndUpdate(
     id,
-    { $set: { mood } },
+    { $set: { mood, why } },
     { new: true, runValidators: true }
   );
 
@@ -253,4 +253,32 @@ export const deleteUpdate = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, deleted, "Update deleted successfully"));
+});
+
+/**
+ * @desc    Update screen time
+ */
+export const updateScreenTime = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { hours, minutes, note } = req.body;
+
+  const update = await Update.findByIdAndUpdate(
+    id,
+    { 
+      $set: { 
+        screenTime: { 
+          hours: Number(hours) || 0, 
+          minutes: Number(minutes) || 0,
+          note: note || ""
+        } 
+      } 
+    },
+    { new: true }
+  );
+
+  if (!update) throw new ApiError(404, "Update not found");
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, update, "Screen time updated successfully"));
 });

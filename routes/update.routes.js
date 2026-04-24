@@ -12,6 +12,7 @@ import {
   toggleIsPublic,
   updateContent,
   deleteUpdate,
+  updateScreenTime,
 } from "../controller/updates.controller.js";
 
 const router = express.Router();
@@ -27,6 +28,7 @@ router.patch("/:id/title", updateTitle);
 router.patch("/:id/mood", updateMood);
 router.patch("/:id/content", updateContent);
 router.patch("/:id/toggle-visibility", toggleIsPublic);
+router.patch("/:id/screen-time", updateScreenTime);
 
 // QAs Operations
 router.post("/:id/qa", addQuestion);
