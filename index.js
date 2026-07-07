@@ -3,6 +3,7 @@ import "dotenv/config";
 import express from "express";
 import fs, { existsSync, readFileSync, writeFileSync } from "fs";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 // dotenv.config();
@@ -30,6 +31,7 @@ import todoRouter from "./routes/todo.routes.js";
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 // We assume we might need cookies, but for now we won't strictly require cookie-parser to run
 app.use(cors({ 
   origin: (origin, callback) => {

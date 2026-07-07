@@ -155,6 +155,12 @@ import mongoosePaginate from "mongoose-paginate-v2";
 
 const streakSchema = new Schema(
   {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true,
+    },
     name: {
       type: String,
       required: [true, "Name is required"],
@@ -179,6 +185,11 @@ const streakSchema = new Schema(
         },
         completedAt: {
           type: Date,
+        },
+        note: {
+          type: String,
+          default: "",
+          trim: true,
         },
       },
     ],
@@ -244,13 +255,8 @@ streakSchema.methods.isYesterday = function(date) {
   );
 };
 
-// Updated markComplete method with daily restrictions
-streakSchema.methods.markComplete = function(streakValue) {
-  // Check if already completed today
-  // if (this.lastCompletedDate && this.isToday(this.lastCompletedDate)) {
-  //   throw new Error("You have already completed a streak today. Come back tomorrow!");
-  // }
-
+// Updated markComplete method with daily restrictions and note
+streakSchema.methods.markComplete = function(streakValue, note = "") {
   // Check if the streak value is the next expected one
   const expectedValue = this.currentStreak + 1;
   if (streakValue !== expectedValue) {
@@ -268,14 +274,16 @@ streakSchema.methods.markComplete = function(streakValue) {
   }
 
   // Check if streak should be reset (missed a day)
+  // If the last completed date exists, and it's not yesterday and not today, it means they missed a day.
   if (this.lastCompletedDate && !this.isYesterday(this.lastCompletedDate) && !this.isToday(this.lastCompletedDate)) {
-    // More than 1 day gap - reset streak but keep the history
+    // Reset streak logic
     this.currentStreak = 0;
   }
 
   // Mark as complete
   streak.completed = true;
   streak.completedAt = new Date();
+  streak.note = note; // Save the daily description/note
   this.lastCompletedDate = new Date();
   this.currentStreak++;
   

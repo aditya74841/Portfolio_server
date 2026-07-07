@@ -4,28 +4,29 @@ import {
   getStreaks,
   getStreakById,
   markStreakComplete,
-  resetCurrentStreak,
+  deleteStreak,
   getStreakStats,
-  // getStreakCount,
   canCompleteToday,
 } from "../controller/streak.controller.js";
+import { protect } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
+
+router.use(protect); // Secure all streak routes
 
 // -----------------------------
 // Basic CRUD-lite
 // -----------------------------
 router.post("/", createStreak);           // Create a new streak
-router.get("/", getStreaks);             // Get all streaks
-// router.get("/count", getStreakCount);    // Get total streak count
-router.get("/:id", getStreakById);       // Get single streak by ID
+router.get("/", getStreaks);              // Get all streaks
+router.get("/:id", getStreakById);        // Get single streak by ID
+router.delete("/:id", deleteStreak);      // Delete streak
 
 // -----------------------------
 // Streak-specific operations
 // -----------------------------
 router.post("/:id/complete", markStreakComplete); // Mark today's streak complete
-router.post("/:id/reset", resetCurrentStreak);   // Reset current streak
-router.get("/:id/stats", getStreakStats);       // Get streak stats
+router.get("/:id/stats", getStreakStats);         // Get streak stats
 router.get("/:id/can-complete", canCompleteToday); // Check if streak can be completed today
 
 export default router;
