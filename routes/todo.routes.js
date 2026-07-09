@@ -13,7 +13,12 @@ import {
   deleteSubTodo,
 } from "../controller/todo.controller.js";
 
+import { protect } from "../middlewares/auth.middleware.js";
+
 const router = Router();
+
+// Protect all Todo routes
+router.use(protect);
 
 // Main Todo routes
 router.route("/").post(addTodo).get(getAllTodos);

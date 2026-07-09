@@ -15,7 +15,12 @@ import {
   updateScreenTime,
 } from "../controller/updates.controller.js";
 
+import { protect } from "../middlewares/auth.middleware.js";
+
 const router = express.Router();
+
+// Protect all Update routes
+router.use(protect);
 
 // Basic CRUD
 router.post("/", createUpdate);

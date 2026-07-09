@@ -15,6 +15,7 @@ export const addTodo = asyncHandler(async (req, res) => {
   }
 
   const todo = await Todo.create({
+    user: req.user._id,
     title,
     description: description || "",
     priority: priority || "medium",
@@ -31,7 +32,7 @@ export const addTodo = asyncHandler(async (req, res) => {
  * @route   GET /api/v1/todos
  */
 export const getAllTodos = asyncHandler(async (req, res) => {
-  const todos = await Todo.find().sort({ createdAt: -1 });
+  const todos = await Todo.find({ user: req.user._id }).sort({ createdAt: -1 });
   return res
     .status(200)
     .json(new ApiResponse(200, todos, "Todos fetched successfully"));
@@ -43,7 +44,7 @@ export const getAllTodos = asyncHandler(async (req, res) => {
  */
 export const getTodoById = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const todo = await Todo.findById(id);
+  const todo = await Todo.findOne({ _id: id, user: req.user._id });
 
   if (!todo) {
     throw new ApiError(404, "Todo not found");
@@ -62,8 +63,8 @@ export const updateTodo = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { title, description, isCompleted, priority, dueDate } = req.body;
 
-  const todo = await Todo.findByIdAndUpdate(
-    id,
+  const todo = await Todo.findOneAndUpdate(
+    { _id: id, user: req.user._id },
     { 
       $set: { 
         ...(title && { title }),
@@ -92,7 +93,7 @@ export const updateTodo = asyncHandler(async (req, res) => {
 export const toggleIsComplete = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  const todo = await Todo.findById(id);
+  const todo = await Todo.findOne({ _id: id, user: req.user._id });
   if (!todo) {
     throw new ApiError(404, "Todo not found");
   }
@@ -117,8 +118,8 @@ export const changePriority = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Valid priority (low, medium, high) is required");
   }
 
-  const todo = await Todo.findByIdAndUpdate(
-    id,
+  const todo = await Todo.findOneAndUpdate(
+    { _id: id, user: req.user._id },
     { $set: { priority } },
     { new: true, runValidators: true }
   );
@@ -139,7 +140,7 @@ export const changePriority = asyncHandler(async (req, res) => {
 export const deleteTodo = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  const deletedTodo = await Todo.findByIdAndDelete(id);
+  const deletedTodo = await Todo.findOneAndDelete({ _id: id, user: req.user._id });
 
   if (!deletedTodo) {
     throw new ApiError(404, "Todo not found");
@@ -162,8 +163,8 @@ export const addSubTodo = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Sub-todo title is required");
   }
 
-  const todo = await Todo.findByIdAndUpdate(
-    id,
+  const todo = await Todo.findOneAndUpdate(
+    { _id: id, user: req.user._id },
     { 
       $push: { 
         subTodos: { 
@@ -199,7 +200,7 @@ export const updateSubTodo = asyncHandler(async (req, res) => {
   if (isCompleted !== undefined) updateFields["subTodos.$.isCompleted"] = isCompleted;
 
   const todo = await Todo.findOneAndUpdate(
-    { _id: id, "subTodos._id": subTodoId },
+    { _id: id, user: req.user._id, "subTodos._id": subTodoId },
     { $set: updateFields },
     { new: true }
   );
@@ -220,7 +221,7 @@ export const updateSubTodo = asyncHandler(async (req, res) => {
 export const toggleSubTodoIsComplete = asyncHandler(async (req, res) => {
   const { id, subTodoId } = req.params;
 
-  const todo = await Todo.findById(id);
+  const todo = await Todo.findOne({ _id: id, user: req.user._id });
   if (!todo) {
     throw new ApiError(404, "Todo not found");
   }
@@ -245,8 +246,8 @@ export const toggleSubTodoIsComplete = asyncHandler(async (req, res) => {
 export const deleteSubTodo = asyncHandler(async (req, res) => {
   const { id, subTodoId } = req.params;
 
-  const todo = await Todo.findByIdAndUpdate(
-    id,
+  const todo = await Todo.findOneAndUpdate(
+    { _id: id, user: req.user._id },
     { $pull: { subTodos: { _id: subTodoId } } },
     { new: true }
   );

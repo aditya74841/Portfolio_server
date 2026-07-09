@@ -16,7 +16,7 @@ export const createUpdate = asyncHandler(async (req, res) => {
   }
 
   // Check if update for this date already exists
-  const existingUpdate = await Update.findOne({ date });
+  const existingUpdate = await Update.findOne({ date, user: req.user._id });
   if (existingUpdate) {
     throw new ApiError(400, `An update for date ${date} already exists`);
   }
@@ -30,6 +30,7 @@ export const createUpdate = asyncHandler(async (req, res) => {
     : [];
 
   const newUpdate = await Update.create({
+    user: req.user._id,
     title: title || "Daily Journal",
     date,
     qas: initialQas,
@@ -45,7 +46,7 @@ export const createUpdate = asyncHandler(async (req, res) => {
  * @route   GET /api/v1/updates
  */
 export const getAllUpdates = asyncHandler(async (req, res) => {
-  const updates = await Update.find().sort({ date: -1, createdAt: -1 });
+  const updates = await Update.find({ user: req.user._id }).sort({ date: -1, createdAt: -1 });
   return res
     .status(200)
     .json(new ApiResponse(200, updates, "Updates fetched successfully"));
@@ -57,7 +58,7 @@ export const getAllUpdates = asyncHandler(async (req, res) => {
  */
 export const getUpdateById = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const update = await Update.findById(id);
+  const update = await Update.findOne({ _id: id, user: req.user._id });
 
   if (!update) {
     throw new ApiError(404, "Update not found");
@@ -77,8 +78,8 @@ export const updateTitle = asyncHandler(async (req, res) => {
 
   if (!title) throw new ApiError(400, "Title is required");
 
-  const update = await Update.findByIdAndUpdate(
-    id,
+  const update = await Update.findOneAndUpdate(
+    { _id: id, user: req.user._id },
     { $set: { title } },
     { new: true }
   );
@@ -99,8 +100,8 @@ export const addQuestion = asyncHandler(async (req, res) => {
 
   if (!question) throw new ApiError(400, "Question is required");
 
-  const update = await Update.findByIdAndUpdate(
-    id,
+  const update = await Update.findOneAndUpdate(
+    { _id: id, user: req.user._id },
     { $push: { qas: { question, answer } } },
     { new: true }
   );
@@ -123,7 +124,7 @@ export const updateQuestion = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Index and question are required");
   }
 
-  const update = await Update.findById(id);
+  const update = await Update.findOne({ _id: id, user: req.user._id });
   if (!update) throw new ApiError(404, "Update not found");
 
   if (!update.qas[index]) throw new ApiError(400, "Invalid QA index");
@@ -147,7 +148,7 @@ export const updateAnswer = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Index is required");
   }
 
-  const update = await Update.findById(id);
+  const update = await Update.findOne({ _id: id, user: req.user._id });
   if (!update) throw new ApiError(404, "Update not found");
 
   if (!update.qas[index]) throw new ApiError(400, "Invalid QA index");
@@ -169,7 +170,7 @@ export const deleteQuestion = asyncHandler(async (req, res) => {
 
   if (index === undefined) throw new ApiError(400, "Index is required");
 
-  const update = await Update.findById(id);
+  const update = await Update.findOne({ _id: id, user: req.user._id });
   if (!update) throw new ApiError(404, "Update not found");
 
   update.qas.splice(index, 1);
@@ -189,8 +190,8 @@ export const updateMood = asyncHandler(async (req, res) => {
 
   if (!mood) throw new ApiError(400, "Mood is required");
 
-  const update = await Update.findByIdAndUpdate(
-    id,
+  const update = await Update.findOneAndUpdate(
+    { _id: id, user: req.user._id },
     { $set: { mood, why } },
     { new: true, runValidators: true }
   );
@@ -208,7 +209,7 @@ export const updateMood = asyncHandler(async (req, res) => {
 export const toggleIsPublic = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  const update = await Update.findById(id);
+  const update = await Update.findOne({ _id: id, user: req.user._id });
   if (!update) throw new ApiError(404, "Update not found");
 
   update.isPublic = !update.isPublic;
@@ -228,8 +229,8 @@ export const updateContent = asyncHandler(async (req, res) => {
 
   if (!updateText) throw new ApiError(400, "Update text is required");
 
-  const updatedUpdate = await Update.findByIdAndUpdate(
-    id,
+  const updatedUpdate = await Update.findOneAndUpdate(
+    { _id: id, user: req.user._id },
     { $set: { update: updateText } },
     { new: true }
   );
@@ -247,7 +248,7 @@ export const updateContent = asyncHandler(async (req, res) => {
 export const deleteUpdate = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  const deleted = await Update.findByIdAndDelete(id);
+  const deleted = await Update.findOneAndDelete({ _id: id, user: req.user._id });
   if (!deleted) throw new ApiError(404, "Update not found");
 
   return res
@@ -262,8 +263,8 @@ export const updateScreenTime = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { hours, minutes, note } = req.body;
 
-  const update = await Update.findByIdAndUpdate(
-    id,
+  const update = await Update.findOneAndUpdate(
+    { _id: id, user: req.user._id },
     { 
       $set: { 
         screenTime: { 

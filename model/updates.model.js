@@ -10,6 +10,11 @@ const qaSchema = new Schema(
 
 const updatesSchema = new Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     title: {
       type: String,
       default: "Daily Journal",
@@ -18,7 +23,7 @@ const updatesSchema = new Schema(
     date: {
       type: String, // "2026-04-23"
       required: true,
-      unique: true, // 🔥 ensures one entry per day
+      // Removed unique: true here to allow multiple users to have an update on the same date
     },
 
     qas: {
@@ -52,5 +57,8 @@ const updatesSchema = new Schema(
   },
   { timestamps: true },
 );
+
+// Ensures one entry per user per day
+updatesSchema.index({ user: 1, date: 1 }, { unique: true });
 
 export const Update = mongoose.model("Update", updatesSchema);

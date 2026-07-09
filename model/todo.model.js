@@ -22,6 +22,11 @@ const subTodoSchema = new Schema(
 
 const todoSchema = new Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     title: {
       type: String,
       required: [true, "Todo title is required"],
@@ -52,7 +57,7 @@ const todoSchema = new Schema(
   { timestamps: true }
 );
 
-// Index for faster queries
-todoSchema.index({ createdAt: -1 });
+// Index for faster queries per user
+todoSchema.index({ user: 1, createdAt: -1 });
 
 export const Todo = mongoose.model("Todo", todoSchema);
