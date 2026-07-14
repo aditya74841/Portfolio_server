@@ -488,7 +488,7 @@ export const changeAvatar = asyncHandler(async (req, res) => {
     throw new ApiError(400, "No image file provided");
   }
 
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id).select("+pin");
 
   // Delete old avatar from Cloudinary if it exists
   if (user.avatar) {
@@ -518,7 +518,7 @@ export const changeAvatar = asyncHandler(async (req, res) => {
 // 12b. Remove Avatar
 // ---------------------------------------------------------------------------
 export const removeAvatar = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id).select("+pin");
 
   // Delete from Cloudinary
   if (user.avatar) {
@@ -550,7 +550,7 @@ export const updateProfile = asyncHandler(async (req, res) => {
     req.user._id,
     { name: name.trim() },
     { new: true },
-  );
+  ).select("+pin");
 
   return res
     .status(200)

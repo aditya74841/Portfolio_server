@@ -5,7 +5,6 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 // Create Category
 const createCategory = asyncHandler(async (req, res) => {
-  console.log("The openai api key is", process.env.OPENAI_API_KEY);
   const { name, description } = req.body;
 
   if (!name) {
@@ -56,7 +55,7 @@ const getCategories = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(
-      new ApiResponse(200, categories, "Categories retrieved successfully")
+      new ApiResponse(200, categories, "Categories retrieved successfully"),
     );
 });
 
@@ -91,7 +90,7 @@ const updateCategory = asyncHandler(async (req, res) => {
   if (!name && !description) {
     throw new ApiError(
       400,
-      "At least one field (name or description) is required to update"
+      "At least one field (name or description) is required to update",
     );
   }
 
@@ -118,7 +117,7 @@ const updateCategory = asyncHandler(async (req, res) => {
     {
       new: true,
       runValidators: true,
-    }
+    },
   );
 
   if (!updatedCategory) {
@@ -128,7 +127,7 @@ const updateCategory = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(
-      new ApiResponse(200, updatedCategory, "Category updated successfully")
+      new ApiResponse(200, updatedCategory, "Category updated successfully"),
     );
 });
 
@@ -163,7 +162,7 @@ const getCategoryCount = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(
-      new ApiResponse(200, { count }, "Category count retrieved successfully")
+      new ApiResponse(200, { count }, "Category count retrieved successfully"),
     );
 });
 
