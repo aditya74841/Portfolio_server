@@ -9,8 +9,9 @@ export const getAllNotes = asyncHandler(async (req, res) => {
 });
 
 export const createNote = asyncHandler(async (req, res) => {
-  const { content } = req.body;
+  const { title, content } = req.body;
   const note = await Note.create({
+    title: title || "",
     content: content || "",
     userId: req.user._id,
   });
@@ -19,11 +20,15 @@ export const createNote = asyncHandler(async (req, res) => {
 
 export const updateNote = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { content } = req.body;
-  
+  const { title, content } = req.body;
+
+  const updateFields = {};
+  if (title !== undefined) updateFields.title = title;
+  if (content !== undefined) updateFields.content = content;
+
   const note = await Note.findOneAndUpdate(
     { _id: id, userId: req.user._id },
-    { content },
+    updateFields,
     { new: true, runValidators: true }
   );
   
@@ -44,3 +49,4 @@ export const deleteNote = asyncHandler(async (req, res) => {
   
   return res.status(200).json(new ApiResponse(200, null, "Note deleted successfully"));
 });
+

@@ -10,7 +10,7 @@ import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-const PIN_SESSION_DURATION_MS = 60 * 60 * 1000; // 1 hour
+const PIN_SESSION_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours (inactivity lock managed on client)
 
 // ---------------------------------------------------------------------------
 // Helpers
