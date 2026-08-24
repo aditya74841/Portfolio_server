@@ -7,7 +7,7 @@
 
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
-import { User } from "../model/user.model.js";
+import { User } from "../src/features/auth/user.model.js";
 
 // ─── Database Helpers ────────────────────────────────────────────────
 

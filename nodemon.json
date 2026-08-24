@@ -1,0 +1,19 @@
+{
+  "watch": [
+    "src",
+    "app.js",
+    "index.js",
+    "server.js"
+  ],
+  "ext": "js,mjs,json",
+  "ignore": [
+    "node_modules",
+    "tests",
+    "*.test.js",
+    "*.spec.js",
+    ".git"
+  ],
+  "execMap": {
+    "js": "node"
+  }
+}
