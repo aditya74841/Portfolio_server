@@ -3,6 +3,7 @@ import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { runQuestionAgent } from "./services/idea-questioner.service.js";
+import { runSwarmReportAgent } from "./services/idea-swarm.service.js";
 
 export const createIdea = asyncHandler(async (req, res) => {
   const { title, description, status } = req.body;
@@ -35,6 +36,50 @@ export const createIdea = asyncHandler(async (req, res) => {
   // Saves 5 clarifying questions to idea.questions[] when done
   runQuestionAgent(idea._id.toString(), idea.title, idea.description).catch((err) =>
     console.error("[createIdea] Question agent error:", err.message)
+  );
+});
+
+export const submitIdeaAnswers = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { answers } = req.body; // Array of { questionId, answer } or { category, answer }
+  const owner = req.user?._id;
+
+  if (!id) {
+    throw new ApiError(400, "Idea ID is required");
+  }
+  if (!owner) {
+    throw new ApiError(401, "Not authorized");
+  }
+  if (!Array.isArray(answers) || answers.length === 0) {
+    throw new ApiError(400, "Answers array is required");
+  }
+
+  const idea = await Idea.findOne({ _id: id, owner });
+  if (!idea) {
+    throw new ApiError(404, "Idea not found");
+  }
+
+  // Update questions array with user answers
+  answers.forEach((ans) => {
+    const q = idea.questions.find(
+      (item) =>
+        (item._id && item._id.toString() === ans.questionId) ||
+        item.category === ans.category
+    );
+    if (q) {
+      q.answer = ans.answer;
+      q.answeredAt = new Date();
+    }
+  });
+
+  idea.aiStatus = "generating_report";
+  await idea.save();
+
+  res.status(200).json(new ApiResponse(200, idea, "Answers submitted. Multi-agent validation started!"));
+
+  // 🤖 Phase 2: Launch 4-Agent Swarm + Synthesizer in background
+  runSwarmReportAgent(idea._id.toString()).catch((err) =>
+    console.error("[submitIdeaAnswers] Swarm error:", err.message)
   );
 });
 

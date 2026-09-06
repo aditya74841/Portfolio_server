@@ -8,6 +8,7 @@ import {
   deleteIdeaUpdate,
   getIdeaById,
   listIdeas,
+  submitIdeaAnswers,
   updateIdea,
   updateIdeaUpdate,
 } from "./idea.controller.js";
@@ -25,6 +26,7 @@ router.get("/:id", getIdeaById);
 router.patch("/:id", updateIdea);
 router.delete("/:id", deleteIdea);
 router.patch("/:id/status", changeIdeaStatus);
+router.post("/:id/answers", submitIdeaAnswers);
 
 // ── Idea Updates (progress logs) ───────────────
 router.post("/:id/updates", addIdeaUpdate);

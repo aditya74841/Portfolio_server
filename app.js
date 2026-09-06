@@ -20,6 +20,7 @@ import aiRouter           from "./src/features/ai-chat/ai.routes.js";
 import categoryRouter     from "./src/features/ai-chat/category.routes.js";
 import questionTemplateRouter from "./src/features/ai-chat/questionTemplate.routes.js";
 import blogRouter             from "./src/features/blog/blog.routes.js";
+import diaryRouter            from "./src/features/diary/diary.routes.js";
 
 // ── App init ───────────────────────────────────────────────────────
 const app = express();
@@ -53,6 +54,7 @@ app.use("/api/v1/ai",           aiRouter);
 app.use("/api/v1/category",     categoryRouter);
 app.use("/api/v1/template",     questionTemplateRouter);
 app.use("/api/v1/blog",         blogRouter);
+app.use("/api/v1/diary",        diaryRouter);
 
 // ── Health ─────────────────────────────────────────────────────────
 app.get("/", (req, res) => res.send("<h1>Aditya's Portfolio Server</h1>"));
